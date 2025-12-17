@@ -1,2 +1,2 @@
-pl.feature.toggle.service.OutboxAutoConfiguration
-pl.feature.toggle.service.OutboxKafkaAutoConfiguration
+pl.feature.toggle.service.outbox.OutboxAutoConfiguration
+pl.feature.toggle.service.outbox.OutboxKafkaAutoConfiguration

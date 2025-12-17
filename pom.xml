@@ -10,6 +10,7 @@
         <java.version>21</java.version>
         <jooq.version>3.19.28</jooq.version>
         <revision>1.0.0-SNAPSHOT</revision>
+        <contracts.version>1.0.1</contracts.version>
     </properties>
     <packaging>jar</packaging>
     <distributionManagement>
@@ -117,7 +118,7 @@
         <dependency>
             <groupId>pl.feature.toggle.service</groupId>
             <artifactId>feature-toggle-contracts</artifactId>
-            <version>1.0.0</version>
+            <version>${contracts.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
