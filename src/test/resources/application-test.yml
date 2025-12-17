@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: outbox-test
+  liquibase:
+    enabled: true
+    change-log: META-INF/ftaas-outbox/changelog/outbox.changelog-master.xml
+  jooq:
+    sql-dialect: POSTGRES
+  datasource:
+    hikari:
+      maximum-pool-size: 3
+
+outbox:
+  kafka:
+    enabled: true
