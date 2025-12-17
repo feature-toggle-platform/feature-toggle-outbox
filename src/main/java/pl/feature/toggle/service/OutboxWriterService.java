@@ -1,11 +1,11 @@
 package pl.feature.toggle.service;
 
-import com.ftaas.contracts.shared.IntegrationEvent;
 import lombok.extern.slf4j.Slf4j;
 import pl.feature.toggle.service.api.OutboxRepository;
 import pl.feature.toggle.service.api.OutboxWriter;
 import pl.feature.toggle.service.api.Payload;
 import pl.feature.toggle.service.api.Type;
+import pl.feature.toggle.service.shared.IntegrationEvent;
 
 @Slf4j
 record OutboxWriterService(

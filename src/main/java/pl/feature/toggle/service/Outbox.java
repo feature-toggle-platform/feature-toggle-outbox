@@ -1,10 +1,10 @@
 package pl.feature.toggle.service;
 
 
-import com.ftaas.contracts.shared.EventId;
-import com.ftaas.contracts.shared.IntegrationEvent;
 import pl.feature.toggle.service.api.Payload;
 import pl.feature.toggle.service.api.Type;
+import pl.feature.toggle.service.shared.EventId;
+import pl.feature.toggle.service.shared.IntegrationEvent;
 
 import java.time.LocalDateTime;
 

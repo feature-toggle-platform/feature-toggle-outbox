@@ -4,25 +4,23 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.feature.toggle.service</groupId>
     <artifactId>feature-toggle-outbox</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>outbox</name>
     <properties>
         <java.version>21</java.version>
         <jooq.version>3.19.28</jooq.version>
+        <revision>1.0.0-SNAPSHOT</revision>
     </properties>
     <packaging>jar</packaging>
-    <repositories>
-        <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/SaQie/FTAAS</url>
-        </repository>
-    </repositories>
     <distributionManagement>
         <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/SaQie/FTAAS</url>
+            <id>nexus-releases</id>
+            <url>https://repo.feature-toggle-service.pl/repository/maven-releases/</url>
         </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <url>https://repo.feature-toggle-service.pl/repository/maven-snapshots/</url>
+        </snapshotRepository>
     </distributionManagement>
     <dependencies>
         <dependency>
@@ -117,8 +115,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.ftaas</groupId>
-            <artifactId>contracts</artifactId>
+            <groupId>pl.feature.toggle.service</groupId>
+            <artifactId>feature-toggle-contracts</artifactId>
             <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>

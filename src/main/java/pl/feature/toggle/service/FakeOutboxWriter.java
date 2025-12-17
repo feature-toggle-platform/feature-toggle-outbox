@@ -1,7 +1,7 @@
 package pl.feature.toggle.service;
 
-import com.ftaas.contracts.shared.IntegrationEvent;
 import pl.feature.toggle.service.api.OutboxWriter;
+import pl.feature.toggle.service.shared.IntegrationEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,9 +1,9 @@
 package pl.feature.toggle.service;
 
-import com.ftaas.contracts.shared.IntegrationEvent;
 import pl.feature.toggle.service.api.OutboxException;
 import pl.feature.toggle.service.api.OutboxPublisher;
 import org.springframework.kafka.core.KafkaTemplate;
+import pl.feature.toggle.service.shared.IntegrationEvent;
 
 record OutboxKafkaPublisher(
         KafkaTemplate<String, Object> kafkaTemplate

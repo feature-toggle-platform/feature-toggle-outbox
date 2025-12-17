@@ -1,10 +1,10 @@
 package pl.feature.toggle.service;
 
-import com.ftaas.contracts.shared.IntegrationEvent;
 import pl.feature.toggle.service.api.OutboxRepository;
 import lombok.AllArgsConstructor;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
+import pl.feature.toggle.service.shared.IntegrationEvent;
 
 import java.util.List;
 

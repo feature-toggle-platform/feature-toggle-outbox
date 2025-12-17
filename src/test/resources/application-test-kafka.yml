@@ -12,4 +12,4 @@ spring:
 
 outbox:
   kafka:
-    enabled: false
+    enabled: true

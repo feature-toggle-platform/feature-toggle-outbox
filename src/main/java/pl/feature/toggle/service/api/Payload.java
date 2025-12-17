@@ -1,6 +1,7 @@
 package pl.feature.toggle.service.api;
 
-import com.ftaas.contracts.shared.IntegrationEvent;
+
+import pl.feature.toggle.service.shared.IntegrationEvent;
 
 public record Payload<T extends IntegrationEvent>(
         T value

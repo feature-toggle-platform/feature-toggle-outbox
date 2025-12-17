@@ -1,10 +1,10 @@
 package pl.feature.toggle.service;
 
-import com.ftaas.contracts.event.projects.ProjectCreated;
 import pl.feature.toggle.service.api.OutboxWriter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import pl.feature.toggle.service.event.projects.ProjectCreated;
 
 import java.util.UUID;
 

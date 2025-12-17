@@ -17,9 +17,9 @@ import static pl.feature.ftaas.outbox.jooq.tables.OutboxEvents.OUTBOX_EVENTS;
 
 @Testcontainers
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ActiveProfiles("test")
+@ActiveProfiles("test-kafka")
 @SpringBootTest
-class AbstractKafkaOutboxTest {
+abstract class AbstractKafkaOutboxTest {
 
     @DynamicPropertySource
     static void pgProps(DynamicPropertyRegistry r) {

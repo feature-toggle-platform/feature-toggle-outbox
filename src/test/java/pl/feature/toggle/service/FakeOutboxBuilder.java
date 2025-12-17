@@ -1,9 +1,9 @@
 package pl.feature.toggle.service;
 
-import com.ftaas.contracts.event.projects.ProjectCreated;
-import com.ftaas.contracts.shared.EventId;
 import pl.feature.toggle.service.api.Payload;
 import pl.feature.toggle.service.api.Type;
+import pl.feature.toggle.service.event.projects.ProjectCreated;
+import pl.feature.toggle.service.shared.EventId;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

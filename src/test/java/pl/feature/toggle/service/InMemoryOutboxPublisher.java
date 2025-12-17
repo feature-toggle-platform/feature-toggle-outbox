@@ -1,7 +1,7 @@
 package pl.feature.toggle.service;
 
-import com.ftaas.contracts.shared.EventId;
 import pl.feature.toggle.service.api.OutboxPublisher;
+import pl.feature.toggle.service.shared.EventId;
 
 import java.util.HashMap;
 import java.util.List;

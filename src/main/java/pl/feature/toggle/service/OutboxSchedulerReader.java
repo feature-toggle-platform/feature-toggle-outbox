@@ -1,6 +1,5 @@
 package pl.feature.toggle.service;
 
-import com.ftaas.contracts.shared.IntegrationEvent;
 import pl.feature.toggle.service.api.OutboxAudit;
 import pl.feature.toggle.service.api.OutboxPublisher;
 import pl.feature.toggle.service.api.OutboxReader;
@@ -9,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
+import pl.feature.toggle.service.shared.IntegrationEvent;
 
 @AllArgsConstructor
 class OutboxSchedulerReader implements OutboxReader {

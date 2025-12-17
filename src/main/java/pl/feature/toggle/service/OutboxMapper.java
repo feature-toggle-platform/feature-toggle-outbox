@@ -2,14 +2,14 @@ package pl.feature.toggle.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ftaas.contracts.shared.EventId;
-import com.ftaas.contracts.shared.IntegrationEvent;
 import pl.feature.ftaas.outbox.jooq.tables.records.OutboxEventsRecord;
 import pl.feature.toggle.service.api.Payload;
 import pl.feature.toggle.service.api.Type;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.jooq.JSON;
+import pl.feature.toggle.service.shared.EventId;
+import pl.feature.toggle.service.shared.IntegrationEvent;
 
 import java.time.OffsetDateTime;
 
