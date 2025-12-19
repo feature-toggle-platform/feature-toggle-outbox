@@ -1,0 +1,60 @@
+name: Publish library to Nexus repository
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "v*" ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    env:
+      NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+      NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      NEXUS_URL: ${{ secrets.NEXUS_URL }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK (snapshots)
+        if: startsWith(github.ref, 'refs/heads/')
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+          server-id: nexus-snapshots
+          server-username: NEXUS_USERNAME
+          server-password: NEXUS_PASSWORD
+
+      - name: Set up JDK (releases)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+          server-id: nexus-releases
+          server-username: NEXUS_USERNAME
+          server-password: NEXUS_PASSWORD
+
+      - name: Decide revision (snapshot vs release)
+        id: ver
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            TAG="${GITHUB_REF#refs/tags/v}"
+            echo "REVISION=${TAG}" >> "$GITHUB_OUTPUT"
+          else
+            echo "REVISION=1.0.0-${GITHUB_RUN_NUMBER}-SNAPSHOT" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build & Deploy
+        run: |
+          mvn -B \
+            -Drevision=${{ steps.ver.outputs.REVISION }} \
+            -Dnexus.url=${NEXUS_URL} \
+            clean deploy

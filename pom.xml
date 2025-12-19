@@ -12,6 +12,18 @@
         <revision>1.0.0-SNAPSHOT</revision>
         <contracts.version>1.0.1</contracts.version>
     </properties>
+    <repositories>
+        <repository>
+            <id>nexus-public</id>
+            <url>https://repo.feature-toggle-service.pl/repository/maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
     <packaging>jar</packaging>
     <distributionManagement>
         <repository>
