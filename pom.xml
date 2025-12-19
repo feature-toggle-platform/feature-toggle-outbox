@@ -16,12 +16,8 @@
         <repository>
             <id>nexus-public</id>
             <url>https://repo.feature-toggle-service.pl/repository/maven-public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
         </repository>
     </repositories>
     <packaging>jar</packaging>

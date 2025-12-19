@@ -19,27 +19,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up JDK (snapshots)
-        if: startsWith(github.ref, 'refs/heads/')
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "21"
           cache: maven
-          server-id: nexus-snapshots
-          server-username: NEXUS_USERNAME
-          server-password: NEXUS_PASSWORD
 
-      - name: Set up JDK (releases)
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "21"
-          cache: maven
-          server-id: nexus-releases
-          server-username: NEXUS_USERNAME
-          server-password: NEXUS_PASSWORD
+      - name: Make script executable
+        run: chmod +x ./.github/scripts/write-maven-settings.sh
+
+      - name: Write Maven settings.xml (read + deploy)
+        run: ./.github/scripts/write-maven-settings.sh
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
 
       - name: Decide revision (snapshot vs release)
         id: ver
