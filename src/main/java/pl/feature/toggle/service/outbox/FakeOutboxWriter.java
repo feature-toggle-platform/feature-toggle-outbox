@@ -55,4 +55,22 @@ public class FakeOutboxWriter implements OutboxWriter {
     public boolean containsEventOfType(Class<?> projectCreatedClass) {
         return events.values().stream().anyMatch(list -> list.stream().anyMatch(event -> event.getClass().equals(projectCreatedClass)));
     }
+
+    public <T extends IntegrationEvent> T lastEventOfType(String topic, Class<T> eventType) {
+        if (!events.containsKey(topic)) {
+            throw new AssertionError("No events published for topic: " + topic);
+        }
+
+        return events.get(topic).stream()
+                .filter(eventType::isInstance)
+                .map(eventType::cast)
+                .reduce((first, second) -> second)
+                .orElseThrow(() -> new AssertionError(
+                        "No event of type " + eventType.getSimpleName() + " published for topic: " + topic
+                ));
+    }
+
+    public boolean noEventsHaveBeenPublished() {
+        return events.isEmpty();
+    }
 }
