@@ -38,9 +38,12 @@ class OutboxKafkaAutoConfiguration {
         cfg.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         cfg.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JacksonJsonSerializer.class);
         cfg.put(ProducerConfig.CLIENT_ID_CONFIG, props.getKafka().getClientId());
-        cfg.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, props.getKafka().getDeliveryTimeoutMs());
-        cfg.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, props.getKafka().getRequestTimeoutMs());
-        cfg.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, props.getKafka().getMaxBlockMs());
+        cfg.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG,
+                Math.toIntExact(props.getKafka().getDeliveryTimeoutMs().toMillis()));
+        cfg.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG,
+                Math.toIntExact(props.getKafka().getRequestTimeoutMs().toMillis()));
+        cfg.put(ProducerConfig.MAX_BLOCK_MS_CONFIG,
+                Math.toIntExact(props.getKafka().getMaxBlockMs().toMillis()));
         props.getKafka().getProps().forEach((kk, vv) -> {
             if (kk != null && vv != null) cfg.put(kk, vv);
         });

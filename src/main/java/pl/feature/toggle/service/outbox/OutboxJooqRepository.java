@@ -1,21 +1,21 @@
 package pl.feature.toggle.service.outbox;
 
-import pl.feature.toggle.service.contracts.shared.IntegrationEvent;
-import pl.feature.toggle.service.outbox.api.OutboxRepository;
 import lombok.AllArgsConstructor;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
+import pl.feature.toggle.service.contracts.shared.IntegrationEvent;
+import pl.feature.toggle.service.outbox.api.OutboxRepository;
 
 import java.util.List;
 
-import static pl.feature.ftaas.outbox.jooq.tables.OutboxEvents.OUTBOX_EVENTS;
 import static org.jooq.impl.DSL.*;
+import static pl.feature.ftaas.outbox.jooq.tables.OutboxEvents.OUTBOX_EVENTS;
 
 @AllArgsConstructor
 class OutboxJooqRepository implements OutboxRepository {
 
     private final DSLContext dslContext;
-
+    private final OutboxMapper outboxMapper;
 
     @Override
     public <T extends IntegrationEvent> List<Outbox<T>> findUnprocessedOutboxes(final int limit) {
@@ -43,7 +43,7 @@ class OutboxJooqRepository implements OutboxRepository {
                     .returning()
                     .fetch();
 
-            return updated.map(OutboxMapper::toDomain);
+            return updated.map(outboxMapper::toDomain);
         });
     }
 
@@ -60,7 +60,7 @@ class OutboxJooqRepository implements OutboxRepository {
     @Override
     public <T extends IntegrationEvent> void save(final Outbox<T> outbox) {
         dslContext.insertInto(OUTBOX_EVENTS)
-                .set(OutboxMapper.fromDomain(outbox))
+                .set(outboxMapper.fromDomain(outbox))
                 .execute();
     }
 }

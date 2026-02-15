@@ -50,6 +50,9 @@ abstract class AbstractKafkaOutboxTest {
     @Autowired
     protected OutboxProperties properties;
 
+    @Autowired
+    protected OutboxMapper outboxMapper;
+
 
     @AfterEach
     void tearDown() {
@@ -63,7 +66,7 @@ abstract class AbstractKafkaOutboxTest {
     protected List<Outbox> findAllOutboxes() {
         return dslContext.selectFrom(OUTBOX_EVENTS)
                 .fetch()
-                .map(OutboxMapper::toDomain);
+                .map(outboxMapper::toDomain);
     }
 
 }

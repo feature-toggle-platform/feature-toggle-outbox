@@ -38,6 +38,9 @@ abstract class AbstractOutboxTest {
     @Autowired
     protected OutboxProperties properties;
 
+    @Autowired
+    protected OutboxMapper outboxMapper;
+
 
     @AfterEach
     void tearDown() {
@@ -48,14 +51,14 @@ abstract class AbstractOutboxTest {
         return dslContext.selectFrom(OUTBOX_EVENTS)
                 .where(OUTBOX_EVENTS.STATUS.eq(status.name()))
                 .fetch()
-                .map(OutboxMapper::toDomain);
+                .map(outboxMapper::toDomain);
     }
 
 
     protected List<Outbox> findAllOutboxes() {
         return dslContext.selectFrom(OUTBOX_EVENTS)
                 .fetch()
-                .map(OutboxMapper::toDomain);
+                .map(outboxMapper::toDomain);
     }
 
     protected void createOutbox(Outbox outbox) {

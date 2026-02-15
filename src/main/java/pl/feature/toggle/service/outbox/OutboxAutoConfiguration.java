@@ -56,7 +56,8 @@ class OutboxAutoConfiguration {
     @ConditionalOnClass(ObjectMapper.class)
     @ConditionalOnMissingBean(ObjectMapper.class)
     ObjectMapper objectMapper() {
-        return new ObjectMapper();
+        return new ObjectMapper()
+                .findAndRegisterModules();
     }
 
     @Bean
@@ -68,14 +69,21 @@ class OutboxAutoConfiguration {
     @Bean
     @ConditionalOnBean(DSLContext.class)
     @ConditionalOnMissingBean(OutboxRepository.class)
-    OutboxRepository outboxRepositoryJooq(DSLContext dsl) {
-        return new OutboxJooqRepository(dsl);
+    OutboxRepository outboxRepositoryJooq(DSLContext dsl, OutboxMapper outboxMapper) {
+        return new OutboxJooqRepository(dsl, outboxMapper);
+    }
+
+    @Bean
+    @ConditionalOnClass(ObjectMapper.class)
+    @ConditionalOnMissingBean(OutboxMapper.class)
+    OutboxMapper outboxMapper(ObjectMapper objectMapper) {
+        return new OutboxMapper(objectMapper);
     }
 
     @Bean
     @ConditionalOnBean(OutboxRepository.class)
     @ConditionalOnMissingBean(OutboxWriter.class)
-    OutboxWriter outboxWriter(final OutboxRepository outboxRepository, final OutboxProperties props, final ApplicationInfoProvider applicationInfoProvider) {
+    OutboxWriter outboxWriter(OutboxRepository outboxRepository, OutboxProperties props, ApplicationInfoProvider applicationInfoProvider) {
         return new OutboxWriterService(outboxRepository, props, applicationInfoProvider);
     }
 
