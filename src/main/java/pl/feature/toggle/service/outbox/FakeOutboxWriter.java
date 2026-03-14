@@ -47,13 +47,20 @@ public class FakeOutboxWriter implements OutboxWriter {
     }
 
 
-    public boolean containsEventOfType(String topic, Class<?> projectCreatedClass) {
+    public boolean containsEventOfType(String topic, Class<?> eventClass) {
         if (!events.containsKey(topic)) return false;
-        return events.get(topic).stream().anyMatch(event -> event.getClass().equals(projectCreatedClass));
+        return events.get(topic).stream().anyMatch(event -> event.getClass().equals(eventClass));
     }
 
-    public boolean containsEventOfType(Class<?> projectCreatedClass) {
-        return events.values().stream().anyMatch(list -> list.stream().anyMatch(event -> event.getClass().equals(projectCreatedClass)));
+    public boolean containsEventOfType(Class<?> eventClass) {
+        return events.values().stream().anyMatch(list -> list.stream().anyMatch(event -> event.getClass().equals(eventClass)));
+    }
+
+    public boolean hasEventTypeCountForTopic(String topic, Class<?> eventClass, int eventCount) {
+        return events.containsKey(topic)
+                && events.get(topic).stream()
+                .filter(event -> event.getClass().equals(eventClass))
+                .count() >= eventCount;
     }
 
     public <T extends IntegrationEvent> T lastEventOfType(String topic, Class<T> eventType) {
