@@ -1,5 +1,6 @@
 package pl.feature.toggle.service.outbox;
 
+import pl.feature.toggle.service.contracts.shared.IntegrationEvent;
 import pl.feature.toggle.service.outbox.api.OutboxAudit;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,12 +18,17 @@ class Slf4jOutboxAudit implements OutboxAudit {
     }
 
     @Override
-    public void startReading(final int size) {
-        log.info("Start reading outbox events: {}", size);
+    public void logException(Exception e) {
+        log.error("Exception occurred while reading outbox events", e);
     }
 
     @Override
-    public void logException(Exception e) {
-        log.error("Exception occurred while reading outbox events", e);
+    public <T extends IntegrationEvent> void publish(Outbox<T> outbox) {
+        log.info("Publishing outbox event to Kafka: eventId={}", outbox.eventId());
+    }
+
+    @Override
+    public <T extends IntegrationEvent> void published(Outbox<T> outbox) {
+        log.info("Outbox event published: eventId={}", outbox.eventId());
     }
 }

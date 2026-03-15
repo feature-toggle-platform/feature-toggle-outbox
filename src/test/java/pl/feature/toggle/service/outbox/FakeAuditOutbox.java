@@ -1,5 +1,6 @@
 package pl.feature.toggle.service.outbox;
 
+import pl.feature.toggle.service.contracts.shared.IntegrationEvent;
 import pl.feature.toggle.service.outbox.api.OutboxAudit;
 
 class FakeAuditOutbox implements OutboxAudit {
@@ -14,12 +15,17 @@ class FakeAuditOutbox implements OutboxAudit {
     }
 
     @Override
-    public void startReading(final int size) {
+    public void logException(Exception e) {
 
     }
 
     @Override
-    public void logException(Exception e) {
+    public <T extends IntegrationEvent> void publish(Outbox<T> outbox) {
+
+    }
+
+    @Override
+    public <T extends IntegrationEvent> void published(Outbox<T> outbox) {
 
     }
 }

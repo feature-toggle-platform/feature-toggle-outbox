@@ -26,8 +26,6 @@ class OutboxSchedulerReader implements OutboxReader {
     @Transactional
     public void process() {
         final var unprocessedOutboxes = repository.findUnprocessedOutboxes(properties.getBatchSize());
-        audit.startReading(unprocessedOutboxes.size());
-
         for (var outbox : unprocessedOutboxes) {
             try {
                 publish(outbox);
@@ -50,9 +48,11 @@ class OutboxSchedulerReader implements OutboxReader {
     }
 
     private <T extends IntegrationEvent> void publish(final Outbox<T> outbox) {
+        audit.publish(outbox);
         publisher.publish(outbox);
         var published = outbox.published();
         repository.update(published);
+        audit.published(outbox);
     }
 
 }

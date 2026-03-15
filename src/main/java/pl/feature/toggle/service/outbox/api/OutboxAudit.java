@@ -1,5 +1,6 @@
 package pl.feature.toggle.service.outbox.api;
 
+import pl.feature.toggle.service.contracts.shared.IntegrationEvent;
 import pl.feature.toggle.service.outbox.Outbox;
 
 public interface OutboxAudit {
@@ -8,7 +9,9 @@ public interface OutboxAudit {
 
     void attemptLimitReached(Outbox outbox);
 
-    void startReading(final int size);
-
     void logException(Exception e);
+
+    <T extends IntegrationEvent> void publish(Outbox<T> outbox);
+
+    <T extends IntegrationEvent> void published(Outbox<T> outbox);
 }
