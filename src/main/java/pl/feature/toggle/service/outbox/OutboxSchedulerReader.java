@@ -1,5 +1,6 @@
 package pl.feature.toggle.service.outbox;
 
+import org.slf4j.MDC;
 import pl.feature.toggle.service.contracts.shared.IntegrationEvent;
 import pl.feature.toggle.service.outbox.api.OutboxAudit;
 import pl.feature.toggle.service.outbox.api.OutboxPublisher;
@@ -28,9 +29,12 @@ class OutboxSchedulerReader implements OutboxReader {
         final var unprocessedOutboxes = repository.findUnprocessedOutboxes(properties.getBatchSize());
         for (var outbox : unprocessedOutboxes) {
             try {
+                MDC.put("correlationId", outbox.payload().value().correlationId());
                 publish(outbox);
             } catch (Exception e) {
                 increaseAttempt(outbox, e);
+            } finally {
+                MDC.clear();
             }
         }
     }

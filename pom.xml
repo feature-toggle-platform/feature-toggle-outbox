@@ -10,7 +10,7 @@
         <java.version>21</java.version>
         <jooq.version>3.19.28</jooq.version>
         <revision>1.0.0-SNAPSHOT</revision>
-        <contracts.version>1.0.1</contracts.version>
+        <contracts.version>1.0.0-SNAPSHOT</contracts.version>
     </properties>
     <repositories>
         <repository>

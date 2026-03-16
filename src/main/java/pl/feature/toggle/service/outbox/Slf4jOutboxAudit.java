@@ -1,8 +1,8 @@
 package pl.feature.toggle.service.outbox;
 
+import lombok.extern.slf4j.Slf4j;
 import pl.feature.toggle.service.contracts.shared.IntegrationEvent;
 import pl.feature.toggle.service.outbox.api.OutboxAudit;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 class Slf4jOutboxAudit implements OutboxAudit {
