@@ -1,7 +1,7 @@
 package pl.feature.toggle.service.outbox;
 
 import pl.feature.toggle.service.contracts.event.project.ProjectCreated;
-import pl.feature.toggle.service.outbox.api.OutboxWriter;
+import pl.feature.toggle.service.outbox.api.OutboxWriter;gi
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
