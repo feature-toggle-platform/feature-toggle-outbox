@@ -8,6 +8,7 @@ import org.jooq.JSON;
 import pl.feature.ftaas.outbox.jooq.tables.records.OutboxEventsRecord;
 import pl.feature.toggle.service.contracts.shared.EventId;
 import pl.feature.toggle.service.contracts.shared.IntegrationEvent;
+import pl.feature.toggle.service.outbox.api.OutboxException;
 import pl.feature.toggle.service.outbox.api.Payload;
 import pl.feature.toggle.service.outbox.api.Type;
 
@@ -57,7 +58,7 @@ final class OutboxMapper {
             T value = objectMapper.readValue(jsonString, clazz);
             return Payload.create(value);
         } catch (ClassNotFoundException | JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new OutboxException("Failed to read payload to class type: " + type, e);
         }
     }
 
@@ -66,7 +67,7 @@ final class OutboxMapper {
             String jsonString = objectMapper.writeValueAsString(payload.value());
             return json(jsonString);
         } catch (Exception e) {
-            throw new IllegalArgumentException(e);
+            throw new OutboxException("Failed to write payload value as json: " + payload.value(), e);
         }
     }
 }
