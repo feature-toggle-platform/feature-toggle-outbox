@@ -2,6 +2,7 @@ package pl.feature.toggle.service.outbox;
 
 import pl.feature.toggle.service.contracts.event.project.ProjectCreated;
 import pl.feature.toggle.service.contracts.shared.EventId;
+import pl.feature.toggle.service.outbox.api.DestinationKey;
 import pl.feature.toggle.service.outbox.api.Payload;
 import pl.feature.toggle.service.outbox.api.Type;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 class FakeOutboxBuilder {
 
+    private DestinationKey destinationKey;
     private EventId eventId;
     private Status status;
     private Attempts attempts;
@@ -24,6 +26,7 @@ class FakeOutboxBuilder {
     }
 
     private FakeOutboxBuilder() {
+        this.destinationKey = DestinationKey.generate();
         this.eventId = EventId.create();
         this.status = Status.createNew();
         this.attempts = Attempts.zero(2);
@@ -79,8 +82,14 @@ class FakeOutboxBuilder {
         return this;
     }
 
+    public FakeOutboxBuilder withDestinationKey(DestinationKey destinationKey) {
+        this.destinationKey = destinationKey;
+        return this;
+    }
+
     public Outbox build() {
         return new Outbox(
+                destinationKey,
                 eventId,
                 status,
                 attempts,

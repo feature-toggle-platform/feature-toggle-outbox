@@ -1,5 +1,6 @@
 create table outbox_events
 (
+    destination_key varchar(100) not null,
     event_id     UUID PRIMARY KEY,
     type         VARCHAR(100) NOT NULL,
     payload_json JSONB        NOT NULL,

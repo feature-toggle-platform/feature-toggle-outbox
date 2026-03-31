@@ -1,6 +1,8 @@
 package pl.feature.toggle.service.outbox;
 
 import pl.feature.toggle.service.contracts.event.project.ProjectCreated;
+import pl.feature.toggle.service.contracts.topic.KafkaTopic;
+import pl.feature.toggle.service.outbox.api.OutboxEvent;
 import pl.feature.toggle.service.outbox.api.OutboxWriter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +31,7 @@ class OutboxWriterTest extends AbstractOutboxTest {
                 .build();
 
         // when
-        outboxWriter.write(event, "test");
+        outboxWriter.write(OutboxEvent.of(event, KafkaTopic.CONFIGURATION));
 
         // then
         var unprocessedOutboxes = repository.findUnprocessedOutboxes(10);

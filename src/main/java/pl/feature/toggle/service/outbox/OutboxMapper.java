@@ -8,6 +8,7 @@ import org.jooq.JSON;
 import pl.feature.ftaas.outbox.jooq.tables.records.OutboxEventsRecord;
 import pl.feature.toggle.service.contracts.shared.EventId;
 import pl.feature.toggle.service.contracts.shared.IntegrationEvent;
+import pl.feature.toggle.service.outbox.api.DestinationKey;
 import pl.feature.toggle.service.outbox.api.OutboxException;
 import pl.feature.toggle.service.outbox.api.Payload;
 import pl.feature.toggle.service.outbox.api.Type;
@@ -24,6 +25,7 @@ final class OutboxMapper {
 
     public <T extends IntegrationEvent> Outbox<T> toDomain(OutboxEventsRecord record) {
         return new Outbox<>(
+                DestinationKey.from(record.getDestinationKey()),
                 EventId.of(record.getEventId()),
                 new Status(Status.Outbox.valueOf(record.getStatus())),
                 new Attempts(record.getAttempts(), record.getMaxAttempts(), record.getErrorMsg()),
@@ -48,6 +50,7 @@ final class OutboxMapper {
         record.setOccurredAt(outbox.occurredAt().atOffset(OffsetDateTime.now().getOffset()));
         record.setMaxAttempts(outbox.attempts().limit());
         record.setErrorMsg(outbox.attempts().lastErrorMessage());
+        record.setDestinationKey(outbox.destinationKey().value());
         return record;
     }
 

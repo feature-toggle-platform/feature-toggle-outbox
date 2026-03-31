@@ -1,6 +1,7 @@
 package pl.feature.toggle.service.outbox;
 
 import pl.feature.toggle.service.contracts.shared.IntegrationEvent;
+import pl.feature.toggle.service.outbox.api.OutboxEvent;
 import pl.feature.toggle.service.outbox.api.OutboxWriter;
 
 import java.util.ArrayList;
@@ -13,8 +14,8 @@ public class FakeOutboxWriter implements OutboxWriter {
     private final Map<String, List<IntegrationEvent>> events = new HashMap<>();
 
     @Override
-    public void write(IntegrationEvent event, String topic) {
-        events.computeIfAbsent(topic, k -> new ArrayList<>()).add(event);
+    public void write(OutboxEvent outboxEvent) {
+        events.computeIfAbsent(outboxEvent.topic().topicName(), k -> new ArrayList<>()).add(outboxEvent.event());
     }
 
     public List<IntegrationEvent> eventsForTopic(String topic) {

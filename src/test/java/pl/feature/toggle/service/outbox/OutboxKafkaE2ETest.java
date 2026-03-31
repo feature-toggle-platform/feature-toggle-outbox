@@ -1,6 +1,8 @@
 package pl.feature.toggle.service.outbox;
 
 import pl.feature.toggle.service.contracts.event.project.ProjectCreated;
+import pl.feature.toggle.service.contracts.topic.KafkaTopic;
+import pl.feature.toggle.service.outbox.api.OutboxEvent;
 import pl.feature.toggle.service.outbox.api.OutboxReader;
 import pl.feature.toggle.service.outbox.api.OutboxWriter;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -52,8 +54,8 @@ class OutboxKafkaE2ETest extends AbstractKafkaOutboxTest {
     @DisplayName("Should publish event to kafka topic")
     void test01() {
         // given
-        var topic = "test";
-        consumer.subscribe(List.of(topic));
+        var topic = KafkaTopic.CONFIGURATION;
+        consumer.subscribe(List.of(topic.topicName()));
 
         var event = ProjectCreated.projectCreatedEventBuilder()
                 .projectId(UUID.randomUUID())
@@ -61,7 +63,7 @@ class OutboxKafkaE2ETest extends AbstractKafkaOutboxTest {
                 .build();
 
         // when
-        outboxWriter.write(event, topic);
+        outboxWriter.write(OutboxEvent.of(event, topic));
         reader.process();
 
         // then
@@ -70,7 +72,7 @@ class OutboxKafkaE2ETest extends AbstractKafkaOutboxTest {
             assertThat(records.count()).isEqualTo(1);
 
             var rec = records.iterator().next();
-            assertThat(rec.topic()).isEqualTo(topic);
+            assertThat(rec.topic()).isEqualTo(topic.topicName());
             assertThat(rec.key()).isNotBlank();
             assertThat(rec.value()).isNotEmpty();
         });
@@ -80,14 +82,14 @@ class OutboxKafkaE2ETest extends AbstractKafkaOutboxTest {
     @DisplayName("Should mark outbox as PROCESSED after successful publish")
     void test02() {
         // given
-        var topic = "test";
+        var topic = KafkaTopic.CONFIGURATION;
         var event = ProjectCreated.projectCreatedEventBuilder()
                 .projectId(UUID.randomUUID())
                 .projectName("TEST")
                 .build();
 
         // when
-        outboxWriter.write(event, topic);
+        outboxWriter.write(OutboxEvent.of(event, topic));
         reader.process();
 
         // then
