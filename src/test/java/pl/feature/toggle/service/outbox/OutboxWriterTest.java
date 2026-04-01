@@ -31,7 +31,7 @@ class OutboxWriterTest extends AbstractOutboxTest {
                 .build();
 
         // when
-        outboxWriter.write(OutboxEvent.of(event, KafkaTopic.CONFIGURATION));
+        outboxWriter.write(OutboxEvent.generatedKey(event, KafkaTopic.CONFIGURATION));
 
         // then
         var unprocessedOutboxes = repository.findUnprocessedOutboxes(10);

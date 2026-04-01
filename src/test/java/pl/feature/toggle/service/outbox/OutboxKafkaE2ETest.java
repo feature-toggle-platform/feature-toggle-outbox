@@ -63,7 +63,7 @@ class OutboxKafkaE2ETest extends AbstractKafkaOutboxTest {
                 .build();
 
         // when
-        outboxWriter.write(OutboxEvent.of(event, topic));
+        outboxWriter.write(OutboxEvent.generatedKey(event, topic));
         reader.process();
 
         // then
@@ -89,7 +89,7 @@ class OutboxKafkaE2ETest extends AbstractKafkaOutboxTest {
                 .build();
 
         // when
-        outboxWriter.write(OutboxEvent.of(event, topic));
+        outboxWriter.write(OutboxEvent.generatedKey(event, topic));
         reader.process();
 
         // then

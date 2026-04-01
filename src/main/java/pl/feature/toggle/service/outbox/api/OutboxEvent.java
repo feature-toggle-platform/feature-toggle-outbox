@@ -17,7 +17,7 @@ public record OutboxEvent(
         return new OutboxEvent(new DestinationKey(destinationKey), event, topic);
     }
 
-    public static OutboxEvent of(IntegrationEvent integrationEvent, KafkaTopic topic) {
+    public static OutboxEvent generatedKey(IntegrationEvent integrationEvent, KafkaTopic topic) {
         return new OutboxEvent(DestinationKey.generate(), integrationEvent, topic);
     }
 
