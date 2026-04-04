@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.configly</groupId>
-    <artifactId>outbox</artifactId>
+    <artifactId>configly-outbox</artifactId>
     <version>${revision}</version>
     <name>configly-outbox</name>
     <properties>
@@ -129,7 +129,7 @@
         </dependency>
         <dependency>
             <groupId>com.configly</groupId>
-            <artifactId>contracts</artifactId>
+            <artifactId>configly-contracts</artifactId>
             <version>${contracts.version}</version>
             <scope>compile</scope>
         </dependency>
