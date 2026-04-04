@@ -129,7 +129,7 @@
         </dependency>
         <dependency>
             <groupId>com.configly</groupId>
-            <artifactId>configly-contracts</artifactId>
+            <artifactId>contracts</artifactId>
             <version>${contracts.version}</version>
             <scope>compile</scope>
         </dependency>
